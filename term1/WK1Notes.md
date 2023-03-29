@@ -85,17 +85,20 @@ A bookmark where all changes to files in the staging are stored and saved. Commi
 | `git init` | initialises git in the directory |  |
 | `git status` | shows what branch, commits, files in staging area or not |
 | `git add` | adds file to staging area | git add filename |
-| `git commit -m` | makes changes -m is a message about the changes made |
+| `git commit -m` | makes changes -m is a message about the changes made | If you forgot the -m you should be able Ctrl X or Q to get out out NANO |
 | `git log` | logs of all changes that have been made |
 | `git diff` | shows changes made |
 
 * can still use . for current directory as a shortcut e.g. git add .
 
+## General Notes
+
+Origin means the local working repository, however when it says `origin/main` it means that it is being worked on the remote repo.
+Working tree clean means there is nothing staged to commit any changes. 
 fork - create own remote repo from someone else's with all of the hjistory up tht etime of the fork
 clone - coipy of the contents of a remote repo to your local repo and working directory
 master/main- default branch on a repo
 origin - default name of the connection the remote repo
-
 ## Markdown
 
 Markdown is a mark up language that is highly compatible with HTML and is a major part of how websites and apps are actually seen.
@@ -107,7 +110,3 @@ Markdown is a mark up language that is highly compatible with HTML and is a majo
 
 Use Markdown cheatsheet as not too much too search through
 
-## General Notes
-
-Origin means the local working repository, however when it says `origin/main` it means that it is being worked on the remote repo.
-Working tree clean means there is nothing staged to commit any changes
