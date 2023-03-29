@@ -266,6 +266,8 @@ All classes have a `.` before their name when being referenced whilst classes ha
 
 * CSS Styless are defined between the `<style><style>` tags
 * Color Values should be done through hexcode or rgb.
+* `<link>` tag defines relationship between current doc and external resource
+* There are many different types of tags (use a cheatsheet for what you need)
 
 Once the element is defined can continue to make changes to the defined element.
 
@@ -295,4 +297,88 @@ Absolute keeps sizing same no matter changes to window, relative changes to elem
 * Internal style sheet: Elements in the same html document, requires a style tag
 * External Style Sheet: Elements in a separate css file and link to html document **(Recommended)**
 
+To link an external style sheet 
+* Need a link tag and hyperlink reference to location of style sheet
+
+```html
+<link rel="stylesheet" href = "css/style.css">
+```
+
 ### **Cascading Specificity**
+
+Way browser calculates which style should apply with a value system as per below to elements.
+1. Inline Style
+2. Id
+3. Class and Pseudo Class
+4. Element
+
+## **CSS Layout**
+
+### **Block Display vs Inline Display (Main Display Types)**
+
+Main difference is how much space is taken up on the browser. Viewable in inspect.
+* Block takes up entire space on browser
+* Links only take up the space they need
+* Each element has a default display most are block and this is modifiable using style tags
+* When changing inline or block display unable to have custom widths and heights they still take the entire display or as much space as they need
+
+Other display types
+* inline-block for example can allow you to change width and height
+
+#### **Div and Span**
+* `<div><div>` is a general block display
+* `<span><span>` is a general inline display
+
+### **Positions**
+
+
+**Static**: Positions by default is static as what is done in HTML 
+**Relative**: We can change position relative to where it's supposed to be without it.
+
+![relative](./prework/Layout/Relative%20Position.PNG)
+````html
+        <style>
+            .box {
+                width: 100px;
+                height: 100px;
+            }
+            #box1 {
+                background: red
+            }
+            #box2 {
+                background:blue;
+                position: relative;
+                left:100px;
+            }
+        </style>
+````
+**Absolute**: Element is taken out of the flow of document. No longer positions according to nearest element. and no longer apart of the board. Green box no longer takes into account blue box as it is "out" of the flow of the page
+
+![absolute](./prework/Layout/Absolute%20Positioning.PNG)
+````html
+        <style>
+            .box {
+                width: 100px;
+                height: 100px;
+            }
+            #box1 {
+                background: red
+            }
+            #box2 {
+                background:blue;
+                position: absolute;
+                left:100px;
+            }
+            #box3{
+                background: green;
+            }
+        </style>
+````
+
+### **Box Model**
+Using inspect can see a box model, the model has 4 parts. Check box-model.html file in `term1/prework/layout`
+* **Margin**: All space around the element
+* **Border**: Border directly around the element
+* **Padding**: Space directly inside the box where content will be located
+
+All aspects affects the size of the element. However att `boxx-sizing: border-box;` prevents border, margin and padding from tasking up more space.
