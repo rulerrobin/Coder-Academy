@@ -106,3 +106,8 @@ Markdown is a mark up language that is highly compatible with HTML and is a majo
 ### Commands List
 
 Use Markdown cheatsheet as not too much too search through
+
+## General Notes
+
+Origin means the local working repository, however when it says `origin/main` it means that it is being worked on the remote repo.
+Working tree clean means there is nothing staged to commit any changes
