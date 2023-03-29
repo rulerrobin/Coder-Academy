@@ -110,3 +110,94 @@ Markdown is a mark up language that is highly compatible with HTML and is a majo
 
 Use Markdown cheatsheet as not too much too search through
 
+## HTML
+
+`<!--comment-->` and  is a comment
+
+Some elements in HTML are inline - appearing one beside the other and others are in block (one below the other). This can be changed using CSS
+
+### What is HTML
+* Is markup language used to tell browser how to display content
+* Tags are the way content is marked up
+* A forward slash indicate a closing tag however not all have closing tabs `<tag>content</tag>`
+
+### Doc Structure
+* When right clicking and inspecting a website it can show you how a website is structured
+* `<head>` is used for styling and interacting
+* `<body>`contains the content of the page
+* Using browser inspects can use to do some debugging as it won't be updated due to it being on server when refreshed
+
+#### Doctype Declaration
+* All HTML docs must start with a `<!DOCTYPE>` Declaration as it is info to the browser about what doc to expect. Indicates type of HTML doc
+* HTML5 decs are simple: `<!DOCTYPE HTML>`
+* `<html><head><body>` are the three main tags in a HTML doc
+
+`<head>`
+* Contains data that is not shown on the page, however it has metadata, title and styling info
+
+`<body>`
+* represents the contenty that is visible on the web page
+
+### Basic HTML Tags
+
+`<heading>`
+* Shows headings and goes up to `<h7></h1>`
+
+`<p>`
+* Paragraph or text content
+
+`<img src="link"/>`
+* Used for images and `src` is an additional attribute for whhere to source image
+
+`<a href="link">Text linked to hyperlink</a>`
+* link tag a meaning attribute `href` meaning hyperlink reference
+
+`<br><br>`
+* Essentially a double space or enter
+
+`<ul></ul>` and `<ol></ol>`
+```html
+<ul> 
+    <li>coding<li>
+    <li>gaming<li>
+</ul>
+```
+* `<ul>` meaning unordered list and `<ol>` meaning ordered list (numbered)
+
+### Absolute and Relative Path
+
+**Absolute Path** Points to the complete path, could be ony link from the internet or for a local file all the way from root directory.
+e.g. `<a href = "htpps://www.google.com/">Google</a>` directly to google or 
+
+**Relative Path** Points to another file location with respect of current file through directories etc. Always navigates to a relative folder then to file
+e.g. `<img src = "img/kitty.jpg">`
+
+Can add `alt` as an alternate attribute which means if image or link is broken it will show as the alt text. e.g. `<img src="img/kitty.jpg" alt ="kitten"/>`
+
+### Link Different Pages
+
+**ID** Used to anchor to different secions of the same page. Usually represented with a # at the front e.g. `#page title` and within the tag itself `<h1 id="heading">Heading 1</h1>`
+
+Below Shows footer linking to below footer and heading linking to heading.
+
+````html
+        <h1 id="heading">Heading 1</h1>
+        <a href="#footer">footer</a>
+
+        <h1 id = "footer">Footer</h1>
+        <a href ="#heading">back to Top</a>
+
+````
+**Relative Paths** Used to link different html pages. 
+
+* Relative pathing means need to show path but can use . as a shortcut
+
+```` 
+<a href="./contact.html">Contact page</a>
+````
+
+### Semantic Tags
+
+Clearly describle its meaning to bnoth browser and developer. INstead of `<div>` and `<span>` saying nothing about the content while `<form>`, `<table>` and `<article>` clearly define the content.
+
+In html there are several semantic tags check [cheat sheet](https://www.w3schools.com/html/html5_semantic_elements.asp).
