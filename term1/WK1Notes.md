@@ -1,10 +1,10 @@
-# Week 1 Notes
+# **Week 1 Notes**
 
-## Terminal Basics
+## **Terminal Basics**
 
 Terminal is an application that allows users to access computers and files without having to use GUI and access to things that are only accessible to CLI. Most code will be executed and run through terminal.
 
-### Commands List
+### **Commands List**
 
 | Command | Use | Examples |
 | ------- | ------ | ------ |
@@ -36,7 +36,7 @@ Terminal is an application that allows users to access computers and files witho
 
 * when using echo if >> is put in front the content will be appended on
 
-## Git Basics
+## **Git Basics**
 
 Topics
 * Version Control
@@ -44,7 +44,7 @@ Topics
 * Core Git Concepts
 * Demo
 
-### Version Control
+### **Version Control**
 Due to the nature of work it ends up being that there will be many files and many versions of files. Version control solves the problem of people working on files at the same time and multiple versions. It keeps track of who is making what changes and resolve conflicts between conflicting changes.
 
 It's more of a tool that keeps code organised.
@@ -52,7 +52,7 @@ It's more of a tool that keeps code organised.
 * Keeps track of large groups of files
 * Popular systems (Git, SVN, Mercurial)
 
-#### Git and GitHub
+#### **Git and GitHub**
 
 | Git | GitHub |
 | ----------- | ---------- |
@@ -62,23 +62,23 @@ It's more of a tool that keeps code organised.
 
 Git is the system that is used and GitHub is the web app that allows collaboration.
 
-#### Core Git Concepts
+#### **Core Git Concepts**
 
-##### Repository
+##### **Repository**
 
 A folder where all the files are stored. 
 
-##### Staging Area
+##### **Staging Area**
 
 A container where we store files we want to change or are making changes to. Where the files from the repository go that are pulled to make changes.
-
-##### Commit
+**
+##### **Commit**
 
 A bookmark where all changes to files in the staging are stored and saved. Commit takes snapshot and puts changes into a log.
 
-##### Pull from repository -> Stage -> Commit to go back to repository
+##### _**Pull from repository -> Stage -> Commit to go back to repository**_
 
-### Commands List
+### **Commands List**
 
 | Command | Use | Examples |
 | ------- | ------ | ------ |
@@ -91,7 +91,7 @@ A bookmark where all changes to files in the staging are stored and saved. Commi
 
 * can still use . for current directory as a shortcut e.g. git add .
 
-## General Notes
+## **General Notes**
 
 Origin means the local working repository, however when it says `origin/main` it means that it is being worked on the remote repo.
 Working tree clean means there is nothing staged to commit any changes. 
@@ -99,35 +99,35 @@ fork - create own remote repo from someone else's with all of the hjistory up th
 clone - coipy of the contents of a remote repo to your local repo and working directory
 master/main- default branch on a repo
 origin - default name of the connection the remote repo
-## Markdown
+## **Markdown**
 
 Markdown is a mark up language that is highly compatible with HTML and is a major part of how websites and apps are actually seen.
 
 * in VS Code can use CTRL SHIFT V as a preview window
 * using ! before a link turns the link into viewer for images 
 
-### Commands List
+### **Commands List**
 
 Use Markdown cheatsheet as not too much too search through
 
-## HTML
+## **HTML**
 
 `<!--comment-->` and  is a comment
 
 Some elements in HTML are inline - appearing one beside the other and others are in block (one below the other). This can be changed using CSS
 
-### What is HTML
+### **What is HTML**
 * Is markup language used to tell browser how to display content
 * Tags are the way content is marked up
 * A forward slash indicate a closing tag however not all have closing tabs `<tag>content</tag>`
 
-### Doc Structure
+### **Doc Structure**
 * When right clicking and inspecting a website it can show you how a website is structured
 * `<head>` is used for styling and interacting
 * `<body>`contains the content of the page
 * Using browser inspects can use to do some debugging as it won't be updated due to it being on server when refreshed
 
-#### Doctype Declaration
+#### **Doctype Declaration**
 * All HTML docs must start with a `<!DOCTYPE>` Declaration as it is info to the browser about what doc to expect. Indicates type of HTML doc
 * HTML5 decs are simple: `<!DOCTYPE HTML>`
 * `<html><head><body>` are the three main tags in a HTML doc
@@ -138,7 +138,7 @@ Some elements in HTML are inline - appearing one beside the other and others are
 `<body>`
 * represents the contenty that is visible on the web page
 
-### Basic HTML Tags
+### **Basic HTML Tags**
 
 `<heading>`
 * Shows headings and goes up to `<h7></h1>`
@@ -164,7 +164,7 @@ Some elements in HTML are inline - appearing one beside the other and others are
 ```
 * `<ul>` meaning unordered list and `<ol>` meaning ordered list (numbered)
 
-### Absolute and Relative Path
+### **Absolute and Relative Path**
 
 **Absolute Path** Points to the complete path, could be ony link from the internet or for a local file all the way from root directory.
 e.g. `<a href = "htpps://www.google.com/">Google</a>` directly to google or 
@@ -174,7 +174,7 @@ e.g. `<img src = "img/kitty.jpg">`
 
 Can add `alt` as an alternate attribute which means if image or link is broken it will show as the alt text. e.g. `<img src="img/kitty.jpg" alt ="kitten"/>`
 
-### Link Different Pages
+### **Link Different Pages**
 
 **ID** Used to anchor to different secions of the same page. Usually represented with a # at the front e.g. `#page title` and within the tag itself `<h1 id="heading">Heading 1</h1>`
 
@@ -196,8 +196,103 @@ Below Shows footer linking to below footer and heading linking to heading.
 <a href="./contact.html">Contact page</a>
 ````
 
-### Semantic Tags
+### **Semantic Tags**
 
 Clearly describle its meaning to bnoth browser and developer. INstead of `<div>` and `<span>` saying nothing about the content while `<form>`, `<table>` and `<article>` clearly define the content.
 
 In html there are several semantic tags check [cheat sheet](https://www.w3schools.com/html/html5_semantic_elements.asp).
+
+## **CSS Basics**
+
+#### **CSS Syntax**
+```html
+        <style>
+            /* element{
+                property: value;
+            }   */
+            h1 {
+                color: #ad3103;
+                text-align: center;
+            }
+        </style>
+```
+### **What is CSS**
+
+```html
+<title>CSS Intro</title>
+        <style>
+            /* element{
+                property: value;
+            }   */
+            h1 {
+                color: #ad3103;
+                text-align: center;
+            }
+            .sub-title{
+                color: blue;
+                font-size: 20px;
+            }
+            #title{
+                color: green;
+                font-size: 40px;
+                border: 2px solid red;
+            } 
+            button:hover{
+                background-color: pink;
+            }
+        </style>
+    <body>
+        <h1 id ="title">Intro to CSS</h1>
+        <h2 class = "sub-title"> sub heading</h2>
+        <h2 class = "sub-title"> sub heading</h2>
+        <h2 class = "sub-title"> sub heading</h2>
+        <p class = "sub-title">this is a para</p>
+        <button>Click here</button>
+
+    </body>
+```
+
+Stands for Cascading Style sheets and describes the style of a HTML document. 
+* A style sheet language
+Style sheet helps web devs separate style from the content, this style can be defined *ONCE* and then applied everywhere.
+* Cascading implies the latest style overriedes the previous definition
+
+`<style></style>` any styling should be in between the style tags
+
+Classes can be reused and ID's have to be unique.
+All classes have a `.` before their name when being referenced whilst classes have a `#`
+
+#### **Style Tags**
+
+* CSS Styless are defined between the `<style><style>` tags
+* Color Values should be done through hexcode or rgb.
+
+Once the element is defined can continue to make changes to the defined element.
+
+### **Selectors**
+
+* Are how style is applied to different HTML elements
+
+**Types of Selectors** **(Ids, Classes and Pseudo Selectors)**
+* Type: Select all elements that have a given node name. (h1, p, img, input, etc)
+* Class: Sleects all elements that have the given class attribute
+* ID: Selelcts elements that have a given id attribute
+* Pseudo Classes: Selects elements based on state information used to define special state of an element. e.g. style an element when mouse hovered
+
+#### 
+
+### **Absolute Vs Relative Units**
+
+Absolute Unit: refers to a fixed size e.g. px, cm, mm
+
+Relative unit: Changes wrt to size of parent element or screen size e.g. %, em, vw, vh
+
+Absolute keeps sizing same no matter changes to window, relative changes to elements on screen and window
+
+### **Inline, Internal and External Stylesheet**
+
+* Inline Stylling: An el;ement inline with html tag
+* Internal style sheet: Elements in the same html document, requires a style tag
+* External Style Sheet: Elements in a separate css file and link to html document **(Recommended)**
+
+### **Cascading Specificity**
