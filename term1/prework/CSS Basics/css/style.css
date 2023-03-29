@@ -1,0 +1,20 @@
+h1 { /* external style sheet */
+        color: #ad3103;
+        text-align: center;
+}
+.sub-title{
+        color: blue;
+        font-size: 20px;
+}
+#title{
+        color: green;
+        font-size: 40px;
+        border: 2px solid red;
+ } 
+ button:hover{
+        background-color: pink;
+ }
+ img{
+        width: 100vw;
+        height: 100vh;
+}
