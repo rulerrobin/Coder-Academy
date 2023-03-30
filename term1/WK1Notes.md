@@ -112,9 +112,12 @@ Use Markdown cheatsheet as not too much too search through
 
 ## **HTML**
 
-`<!--comment-->` and  is a comment
+`<!--comment-->` is a comment (ctrl + /)
+For basic boiler plate can use ! and then enter to autofill.
 
-Some elements in HTML are inline - appearing one beside the other and others are in block (one below the other). This can be changed using CSS
+Some elements in HTML are inline - appearing one beside the other and others are in block (one below the other). This can be changed using CSS.
+
+## To View use - http://localhost:portnumber bottom right
 
 ### **What is HTML**
 * Is markup language used to tell browser how to display content
@@ -125,6 +128,8 @@ Some elements in HTML are inline - appearing one beside the other and others are
 * When right clicking and inspecting a website it can show you how a website is structured
 * `<head>` is used for styling and interacting
 * `<body>`contains the content of the page
+* `<meta charset="UTF-8">` sets character set used
+* `name ="viewport"` is for devices 
 * Using browser inspects can use to do some debugging as it won't be updated due to it being on server when refreshed
 
 #### **Doctype Declaration**
@@ -207,15 +212,21 @@ In html there are several semantic tags check [cheat sheet](https://www.w3school
 #### **CSS Syntax**
 ```html
         <style>
-            /* element{
+            /* element,
+            element 2{
                 property: value;
             }   */
+            /* can do multiple elements at once with comma */
             h1 {
                 color: #ad3103;
                 text-align: center;
             }
         </style>
 ```
+Can also set as multiple classes.
+`<div class ="box square"></div>`
+
+![Syntax](./prework/CSS%20Basics/Selectors.png)
 ### **What is CSS**
 
 ```html
@@ -265,7 +276,7 @@ All classes have a `.` before their name when being referenced whilst classes ha
 #### **Style Tags**
 
 * CSS Styless are defined between the `<style><style>` tags
-* Color Values should be done through hexcode or rgb.
+* Color Values should be done through hexcode or rgb, however some can use hsl (hue, saturation, lightness)
 * `<link>` tag defines relationship between current doc and external resource
 * There are many different types of tags (use a cheatsheet for what you need)
 
@@ -277,17 +288,31 @@ Once the element is defined can continue to make changes to the defined element.
 
 **Types of Selectors** **(Ids, Classes and Pseudo Selectors)**
 * Type: Select all elements that have a given node name. (h1, p, img, input, etc)
-* Class: Sleects all elements that have the given class attribute
-* ID: Selelcts elements that have a given id attribute
+* Class: Sleects all elements that have the given class attribute (#)
+* ID: Selelcts elements that have a given id attribute (.)
 * Pseudo Classes: Selects elements based on state information used to define special state of an element. e.g. style an element when mouse hovered
 
-#### 
+#### **Examples of Pseudo Classes**
+A CSS pseudo-class is a keyword added to a selector that specifies a special state of the selected element(s). They are used heavily in complex animation.
+
+Psuedo-classes are denoted with a single colon.
+* `button:hover` when hovering over element
+* `li:nth-child(even)` affects every 2nd element
+* `a:visited` if user has visited previously
+
 
 ### **Absolute Vs Relative Units**
 
-Absolute Unit: refers to a fixed size e.g. px, cm, mm
+**Absolute Unit**: refers to a fixed size e.g. px, cm, mm (Not recommended)
 
-Relative unit: Changes wrt to size of parent element or screen size e.g. %, em, vw, vh
+**Relative units** are used to create responsive designs that accomodate to different screen sizes.
+* % - relative to the size of the parent element (e.g an image that is 50% of the div it exists in)
+* VH - relative to the viewport heigh (e.g a landing page that takes up the entire screen of whatever device it is viewed on)
+* VW - relative to the viewport width
+* EM - relative to the font size of the parent element (e.g a heading that has margin as big as the letters in the heading)
+* REM - relative to the font size of the root element (e.g all text in a website having padding the same size as the text)
+
+Changes wrt to size of parent element or screen size e.g. %, rem, em, vw, vh (1em is 16 pixels)
 
 Absolute keeps sizing same no matter changes to window, relative changes to elements on screen and window
 
@@ -307,10 +332,13 @@ To link an external style sheet
 ### **Cascading Specificity**
 
 Way browser calculates which style should apply with a value system as per below to elements.
-1. Inline Style
-2. Id
-3. Class and Pseudo Class
-4. Element
+1. Using **`!important`** at the end of a styling rule will overwrite anything.
+2. Inline Style - we can quickly overwrite styling from an externally linked stylesheet by using the style attribute on a HTML element. Also one to be careful with because it's hard to see in the CSS file
+3. Id -  Targeting an ID is considered more specific than targeting a class. Useful when creating one off styles
+4. Class and Pseudo Class - This is less specific than ID because we can target multiple elements with a class
+5. Element - The most generic selector, it could target all elements of that type in your document. So it makes sense that it's easily overwritten.
+
+
 
 ## **CSS Layout**
 
@@ -322,18 +350,27 @@ Main difference is how much space is taken up on the browser. Viewable in inspec
 * Each element has a default display most are block and this is modifiable using style tags
 * When changing inline or block display unable to have custom widths and heights they still take the entire display or as much space as they need
 
-Other display types
-* inline-block for example can allow you to change width and height
+Setting display types
+* display: block;
+* display: inline;
 
 #### **Div and Span**
 * `<div><div>` is a general block display
 * `<span><span>` is a general inline display
 
+### **Overflow**
+* `overflow: hidden;` hides the overflow
+* `overflow: scroll;` creates a scrollbar for overflow
+
 ### **Positions**
 
+**Static**: The element is positioned according to the normal flow of the document. The top, right, bottom, left, and z-index properties have no effect. This is the default value.
 
-**Static**: Positions by default is static as what is done in HTML 
-**Relative**: We can change position relative to where it's supposed to be without it.
+**Relative**: Relative to the element's normal position
+
+**Sticky**: Relative to the nearest scrolling ancestor (moves with scroller)
+
+**fixed**: Relative to the viewport
 
 ![relative](./prework/Layout/Relative%20Position.PNG)
 ````html
@@ -352,7 +389,7 @@ Other display types
             }
         </style>
 ````
-**Absolute**: Element is taken out of the flow of document. No longer positions according to nearest element. and no longer apart of the board. Green box no longer takes into account blue box as it is "out" of the flow of the page
+**Absolute**: Element is taken out of the flow of document. No longer positions according to nearest element and no longer apart of the board (relative to the first parent whose position is set). Green box no longer takes into account blue box as it is "out" of the flow of the page.
 
 ![absolute](./prework/Layout/Absolute%20Positioning.PNG)
 ````html
@@ -382,3 +419,34 @@ Using inspect can see a box model, the model has 4 parts. Check box-model.html f
 * **Padding**: Space directly inside the box where content will be located
 
 All aspects affects the size of the element. However att `boxx-sizing: border-box;` prevents border, margin and padding from tasking up more space.
+
+### **Inheritance**
+In CSS, inheritance controls what happens when no value is specified for a property on an element.
+
+Generally the properties that effect typography and spacing are inherited.
+
+CSS properties can be categorized in two types:
+
+* **inherited properties**: default are set to the computed value of the parent element
+
+````html
+  <body>
+    <p>
+      Lorem ipsum, dolor sit amet <strong>consectetur</strong> adipisicing elit.
+      Nesciunt, iusto.
+    </p>
+  </body>
+````
+Combined with forced to inherit properties from parent element as `<strong>` is within parent element of `<p>`
+````css
+p {
+  color: dodgerblue;
+  border: 1px solid black;
+}
+strong {
+  color: initial;
+  border: inherit;
+}
+````
+
+* **non-inherited properties**: default are set to initial value of the property

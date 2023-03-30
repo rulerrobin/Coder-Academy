@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+}
+
+nav a[href]:nth-child(even) {
+    background-color: grey;
+}
+
+span span span{
+    color: red;
+}
+
+p:last-of-type{
+    margin-top: 20%
+}
+}
