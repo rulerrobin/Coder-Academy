@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset=utf-8>
+  <title>CoderAcademy</title>  
+</head>
+<body>
+
+    <style>
+        .puppy-img {
+          width: 200px;
+          height: 200px;
+          transition: 2s;
+          animation-name: appear;
+          animation-duration: 5s;
+        }
+
+        .puppy-img:hover {
+            width: 300px;
+            height: 300px;
+            rotate: 45deg;
+            filter: grayscale(1);
+            
+        }
+
+        @keyframes appear {
+            0% {
+                width: 100px;
+                height: 100px;
+            }
+            50% {
+                width: 300px; 
+                height: 300px;
+            }
+            100% {
+                width: 200px; 
+                height: 200px;
+            }
+        }
+
+        .puppy-link {
+          color: green;
+        }
+
+        .puppy-link:visited{
+          color: #FFC0CB;
+        }
+
+        .puppy-link:hover{
+            text-decoration: none;
+        }
+    </style>
+
+    <img class="puppy-img" src="./cute-puppy.jpg"/>
+    <a class="puppy-link" href="https://www.google.com/">Buy a Puppy</a>
+
+</body>
+</html>
