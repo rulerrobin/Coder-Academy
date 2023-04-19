@@ -61,3 +61,7 @@ https://automatetheboringstuff.com/2e/chapter2/
 https://cs50.harvard.edu/python/2022/notes/1/
 
 https://pythontutor.com/
+
+### Flowcharts
+
+https://www.lucidchart.com/pages/what-is-a-flowchart-tutorial#top
