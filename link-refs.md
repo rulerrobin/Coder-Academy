@@ -69,6 +69,20 @@ https://pythontutor.com/
 
 https://docs.python.org/3/tutorial/controlflow.html#defining-functions
 
+https://automatetheboringstuff.com/2e/chapter3/
+
+### Lists
+
+https://automatetheboringstuff.com/2e/chapter4/
+
+https://docs.python.org/3/tutorial/introduction.html#lists
+
+### Dictionaries
+
+https://automatetheboringstuff.com/2e/chapter5/
+
+https://docs.python.org/3/tutorial/datastructures.html#dictionaries
+
 ### Flowcharts
 
 https://www.lucidchart.com/pages/what-is-a-flowchart-tutorial#top
