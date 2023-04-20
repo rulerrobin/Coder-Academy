@@ -40,6 +40,8 @@ https://www.netlify.com/
 
 ## Python
 
+https://pythontutor.com/visualize.html#mode=edit
+
 ### Intro 
 
 https://automatetheboringstuff.com/2e/chapter1/
@@ -61,6 +63,11 @@ https://automatetheboringstuff.com/2e/chapter2/
 https://cs50.harvard.edu/python/2022/notes/1/
 
 https://pythontutor.com/
+
+
+### Defining Functions
+
+https://docs.python.org/3/tutorial/controlflow.html#defining-functions
 
 ### Flowcharts
 
