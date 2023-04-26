@@ -20,7 +20,7 @@ for guesses_left in range (6, 0, -1):
         print ('Correct!')
         break
 
-    # else display guesses left
-    if guess != number:
-        print(f'Sorry! The number was {number}')
+    # if 6 incorrect guesses
+if guess != number:
+    print(f'Sorry! The number was {number}')
 
