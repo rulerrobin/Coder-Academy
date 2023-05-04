@@ -47,9 +47,18 @@ menu = [
     {'item': 'Blueberry Muffin', 'price': 6}
 ]
 
-with open('cafe-menu.csv', 'w') as f:
-    writer = csv.DictWriter(f, menu[0].keys()) # insttead of a hard code list it accesses the [0] item and gets they .keys from there
-    # writer = csv.DictWriter(f, ['item', 'price']) # accepts a list and writes it out as a CSV file | to ommit a column
-    # writer.writerow(['item', 'price'])
-    writer.writeheader() # because its a dict it will write keys as headers
-    writer.writerows(menu)
+# with open('cafe-menu.csv', 'w') as f:
+#     writer = csv.DictWriter(f, menu[0].keys()) # insttead of a hard code list it accesses the [0] item and gets they .keys from there
+#     # writer = csv.DictWriter(f, ['item', 'price']) # accepts a list and writes it out as a CSV file | to ommit a column
+#     # writer.writerow(['item', 'price'])
+#     writer.writeheader() # because its a dict it will write keys as headers
+#     writer.writerows(menu)
+
+import json
+
+# with open ('movies.json') as f:
+#     movies = json.load(f) # parses json data into python objects of lists and dictionariees
+#     print(movies[0])
+
+with open ('cafe-menu.json', 'w') as f:
+    json.dump(menu, f, indent=2) # first parameter is data structure to file, second is where it goes since `f` is opened as **file** indent = \n
