@@ -21,7 +21,8 @@ aragorn = rpg.Character('Aragorn', 'Human', 100, 50, )
 galadriel = rpg.Mage('Galadriel', 'Elf', 120, 75, 200)
 frodo = rpg.Burglar('Frodo', 'Hobbit', 50, 25)
 
-galadriel.wallet.set(10, 5, 2)
+# in python can also do # galadriel.wallet.set(10, 5, 2) 
+galadriel.wallet.value = 10, 5, 2 # doing multiple assignment wraps in a tuple as (10, 5, 2)
 
 
 chest = rpg.Chest (['longsword', 'iron helm'], 2, 50, 10)
@@ -42,3 +43,10 @@ print (galadriel.__dict__)
 galadriel.battle(frodo)
 frodo.battle(aragorn)
 galadriel.portal('Minas Tirith') # Beacons are lit
+
+# galadriel.wallet._gold = 'Hello'  # For some reason creates a new object so its bugged but if this is commented out it stops working attr error
+# Does not change because __gold is private due to the `__` HOWEVER a single `_` will still allow change
+
+# galadriel.show_gold()
+_, y, _= galadriel.wallet.value #multiple assignment to refer to values when needed _ can also be used as a sort of pass
+print(galadriel.wallet.value) # since its a method needs () unless @property is above the method to call as if attribute
