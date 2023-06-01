@@ -7,6 +7,8 @@ app = Flask(__name__)
 print(app.config)
 
 # for alchemy to connect; needs to know what to connect (username) and what it is using to connect (ORM) then login then server then database?
+
+# protocol+data base adaptor://user:password@hostname:port/database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://trello_dev:spameggs123@localhost:5432/trello' 
 # has to be exact for it to work  app.config('SQLALCHEMY_DATABASE_URI')
 
@@ -33,21 +35,52 @@ def create_db():
 @app.cli.command('seed') # creates instance of the Card model in memory
 def seed_db():
     # created new instance of Card
-    card = Card(
-        title = 'Start the project',
-        description = 'Stage 1 - Create an ERD',
-        date_created = date.today()
-    )
+    cards = [
+        Card(
+            title = 'Start the project',
+            description = 'Stage 1 - Create an ERD',
+            date_created = date.today()
+        ),
+
+        Card(
+            title = 'ORM Queries',
+            description = 'Stage 2 - Implement several queries',
+            date_created = date.today()
+        ),
+
+        Card(
+            title = 'Marshmallow',
+            description = 'Stage 3 - Implement jsonify of models',
+            date_created = date.today()
+        )
+    ]
 
     # truncate the Card table same as drop table but only deletes records in table as reseeding
     db.session.query(Card).delete()
 
     # add card to session (transaction)
-    db.session.add(card)
+    db.session.add_all(cards)
+
 
     # commit transaction to database 
     db.session.commit()
     print('Models seeded')
+
+@app.cli.command('all_cards')
+def all_cards():
+    # GOAL - select * from cards;
+    stmt = db.select(Card) # .limit(2) # do a select query from cards limited to 2 # if only 1 its returned as an item/object
+
+    # executes statement above
+    # cards = db.session.execute(stmt)  # default tuple
+    cards = db.session.scalars(stmt).all() # returns model instances # all will always return a list
+
+    # cards = db.session.scalars(stmt).first() # returns first one
+
+    # print(cards) 
+
+    for card in cards: # loops over 
+        print(card.title)
 
 @app.route('/')
 def index():
