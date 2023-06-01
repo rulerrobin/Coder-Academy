@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
+from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
 
@@ -13,6 +14,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://trello_dev:spameg
 # has to be exact for it to work  app.config('SQLALCHEMY_DATABASE_URI')
 
 db = SQLAlchemy(app) # create new instance of SQLAlchemy with a connection to the app
+ma = Marshmallow(app)
 
 # alchemy allows us to put a model on a database
 class Card(db.Model): # inheriting from database SQLalchemy structure
@@ -23,6 +25,11 @@ class Card(db.Model): # inheriting from database SQLalchemy structure
     description = db.Column(db.String())
     status = db.Column(db.String(30))
     date_created = db.Column(db.Date())
+
+class CardSchema(ma.Schema): # name convention = modelNameSchema
+    class Meta:
+        # list model fields wanting to be included
+        fields = ('id', 'title', 'description', 'status', 'date_created')
 
 
 # just as per sql tables we dropped first we also need to drop the tables whenever created so it becomes a new slate
@@ -79,7 +86,7 @@ def all_cards():
     # executes statement above
     # cards = db.session.execute(stmt)  # default tuple
     cards = db.session.scalars(stmt).all() # returns model instances # all will always return a list
-    return json.dumps(cards)
+    return CardSchema().dumps(cards) # pass object that needs to be jsonified
     # cards = db.session.scalars(stmt).first() # returns first one
 
     # print(cards) 
