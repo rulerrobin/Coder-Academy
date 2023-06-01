@@ -21,6 +21,7 @@ class Card(db.Model): # inheriting from database SQLalchemy structure
     id = db.Column(db.Integer, primary_key=True) # tells it is the primary key and it integer
     title = db.Column(db.String(100))
     description = db.Column(db.String())
+    status = db.Column(db.String(30))
     date_created = db.Column(db.Date())
 
 
@@ -39,18 +40,21 @@ def seed_db():
         Card(
             title = 'Start the project',
             description = 'Stage 1 - Create an ERD',
+            status = "Done",
             date_created = date.today()
         ),
 
         Card(
             title = 'ORM Queries',
             description = 'Stage 2 - Implement several queries',
+            status = "In Progress",
             date_created = date.today()
         ),
 
         Card(
             title = 'Marshmallow',
             description = 'Stage 3 - Implement jsonify of models',
+            status = "In Progress",
             date_created = date.today()
         )
     ]
@@ -66,21 +70,22 @@ def seed_db():
     db.session.commit()
     print('Models seeded')
 
-@app.cli.command('all_cards')
+@app.route('/cards')
 def all_cards():
     # GOAL - select * from cards;
-    stmt = db.select(Card) # .limit(2) # do a select query from cards limited to 2 # if only 1 its returned as an item/object
+    stmt = db.select(Card).order_by(Card.status.desc())
+    # .limit(2) # do a select query from cards limited to 2 # if only 1 its returned as an item/object
 
     # executes statement above
     # cards = db.session.execute(stmt)  # default tuple
     cards = db.session.scalars(stmt).all() # returns model instances # all will always return a list
-
+    return json.dumps(cards)
     # cards = db.session.scalars(stmt).first() # returns first one
 
     # print(cards) 
 
-    for card in cards: # loops over 
-        print(card.title)
+    # for card in cards: # loops over 
+    #     print(card.__dict__)
 
 @app.route('/')
 def index():
