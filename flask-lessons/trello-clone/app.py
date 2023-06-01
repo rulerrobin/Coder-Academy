@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 print(app.config)
 
+
 # for alchemy to connect; needs to know what to connect (username) and what it is using to connect (ORM) then login then server then database?
 
 # protocol+data base adaptor://user:password@hostname:port/database
@@ -30,6 +31,8 @@ class CardSchema(ma.Schema): # name convention = modelNameSchema
     class Meta:
         # list model fields wanting to be included
         fields = ('id', 'title', 'description', 'status', 'date_created')
+=
+        
 
 
 # just as per sql tables we dropped first we also need to drop the tables whenever created so it becomes a new slate
@@ -86,7 +89,9 @@ def all_cards():
     # executes statement above
     # cards = db.session.execute(stmt)  # default tuple
     cards = db.session.scalars(stmt).all() # returns model instances # all will always return a list
-    return CardSchema().dumps(cards) # pass object that needs to be jsonified
+    return CardSchema(many=True).dump(cards) 
+    # dump vs dumps = dump changes to python which allows marshmallow to understand
+    # pass object that needs to be jsonified # have to set many=True otherwise default it will expect only one to be returned otherwise it will be ignored
     # cards = db.session.scalars(stmt).first() # returns first one
 
     # print(cards) 
