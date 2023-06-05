@@ -31,7 +31,6 @@ class CardSchema(ma.Schema): # name convention = modelNameSchema
     class Meta:
         # list model fields wanting to be included
         fields = ('id', 'title', 'description', 'status', 'date_created')
-=
         
 
 
