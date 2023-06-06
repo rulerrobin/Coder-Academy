@@ -1,7 +1,9 @@
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
 from flask_marshmallow import Marshmallow
+from flask_bcrypt import Bcrypt
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 
@@ -16,6 +18,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://trello_dev:spameg
 
 db = SQLAlchemy(app) # create new instance of SQLAlchemy with a connection to the app
 ma = Marshmallow(app)
+bcrypt = Bcrypt(app) 
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -26,9 +29,9 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
-class UserScheme(ma.Schema):
+class UserSchema(ma.Schema):
     class Meta:
-        fields = ('name', 'email', 'is_admin') # Only these fields to show 
+        fields = ('name', 'email', 'password', 'is_admin') # Only these fields to show 
 
 # alchemy allows us to put a model on a database
 class Card(db.Model): # inheriting from database SQLalchemy structure
@@ -61,13 +64,13 @@ def seed_db():
     users = [
         User(
             email = 'admin@spam.com',
-            password = 'spinynorman',
+            password = bcrypt.generate_password_hash('spinynorman').decode('utf-8'),# decode utf converts to show as base 64
             is_admin = True
         ),
         User(
             name = 'John Cleese',
-            email = 'cleese@spam.com',
-            password = 'tisbutascratch',
+            email = 'cleese@spam.com', 
+            password = bcrypt.generate_password_hash('tisbutascratch').decode('utf-8'),
         )
     ]
 
@@ -107,6 +110,31 @@ def seed_db():
     # commit all transactions to database 
     db.session.commit()
     print('Models seeded')
+
+@app.route('/register', methods=['POST']) # second parameter can put list of methods can use
+def register():
+    try:
+        # Parse, sanitize and validate the incoming JSON data
+        # via the schema. 
+        user_info = UserSchema().load(request.json) 
+        # Create a new User model instance with the scheme data 
+        user = User(
+            email = user_info['email'],
+            password = bcrypt.generate_password_hash(user_info['password']).decode('utf-8'),
+            name = user_info['name']
+        )
+
+        # add and commit the new user
+        db.session.add(user)
+        db.session.commit()
+
+        # print(request.json) # request function prints information about incoming request # .json as incoming json object allows to see as python object
+        # print (user.__dict__)
+
+        # return the new user
+        return UserSchema(exclude=['password']).dump(user), 201
+    except IntegrityError:
+        return {'error': 'Email address already in use'}, 409
 
 @app.route('/cards')
 def all_cards():
