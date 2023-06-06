@@ -17,6 +17,19 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://trello_dev:spameg
 db = SQLAlchemy(app) # create new instance of SQLAlchemy with a connection to the app
 ma = Marshmallow(app)
 
+class User(db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    email = db.Column(db.String, nullable=False, unique=True)
+    password = db.Column(db.String, nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
+
+class UserScheme(ma.Schema):
+    class Meta:
+        fields = ('name', 'email', 'is_admin') # Only these fields to show 
+
 # alchemy allows us to put a model on a database
 class Card(db.Model): # inheriting from database SQLalchemy structure
     __tablename__ = 'cards' # declare name of table
@@ -44,6 +57,20 @@ def create_db():
 
 @app.cli.command('seed') # creates instance of the Card model in memory
 def seed_db():
+
+    users = [
+        User(
+            email = 'admin@spam.com',
+            password = 'spinynorman',
+            is_admin = True
+        ),
+        User(
+            name = 'John Cleese',
+            email = 'cleese@spam.com',
+            password = 'tisbutascratch',
+        )
+    ]
+
     # created new instance of Card
     cards = [
         Card(
@@ -70,12 +97,14 @@ def seed_db():
 
     # truncate the Card table same as drop table but only deletes records in table as reseeding
     db.session.query(Card).delete()
+    db.session.query(User).delete()
 
     # add card to session (transaction)
     db.session.add_all(cards)
+    db.session.add_all(users)
 
 
-    # commit transaction to database 
+    # commit all transactions to database 
     db.session.commit()
     print('Models seeded')
 
@@ -87,8 +116,9 @@ def all_cards():
 
     # executes statement above
     # cards = db.session.execute(stmt)  # default tuple
-    cards = db.session.scalars(stmt).all() # returns model instances # all will always return a list
-    return CardSchema(many=True).dump(cards) 
+    cards = db.session.scalars(stmt).all() # scalars uses a list
+    # returns model instances # all will always return a list
+    return CardSchema(many=True).dump(cards) # default is one so need many = True for more than one
     # dump vs dumps = dump changes to python which allows marshmallow to understand
     # pass object that needs to be jsonified # have to set many=True otherwise default it will expect only one to be returned otherwise it will be ignored
     # cards = db.session.scalars(stmt).first() # returns first one
