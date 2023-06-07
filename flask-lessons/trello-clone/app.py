@@ -4,13 +4,14 @@ from datetime import date
 from flask_marshmallow import Marshmallow
 from flask_bcrypt import Bcrypt
 from sqlalchemy.exc import IntegrityError
+from flask_jwt_extended import JWTManager, create_access_token
+from datetime import timedelta
 
 app = Flask(__name__)
 
 print(app.config)
 
-
-# for alchemy to connect; needs to know what to connect (username) and what it is using to connect (ORM) then login then server then database?
+app.config['JWT_SECRET_KEY'] = 'Ministry of Silly Walks' # Can be anything as a secret key, used to sign, verify and create tokens
 
 # protocol+data base adaptor://user:password@hostname:port/database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://trello_dev:spameggs123@localhost:5432/trello' 
@@ -19,6 +20,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://trello_dev:spameg
 db = SQLAlchemy(app) # create new instance of SQLAlchemy with a connection to the app
 ma = Marshmallow(app)
 bcrypt = Bcrypt(app) 
+jwt = JWTManager(app)
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -143,7 +145,8 @@ def login():
         user = db.session.scalar(stmt) 
         
         if user and bcrypt.check_password_hash(user.password, request.json['password']): # checks user is true otherwise skips
-            return UserSchema(exclude=['password']).dump(user)
+            token = create_access_token(identity=user.email, expires_delta=timedelta(days=1)) # expiry of token
+            return {'token': token, 'user': UserSchema(exclude=['password']).dump(user)}
         else:
             return {'error': 'Invalid email address or password'}, 401
     except KeyError:
