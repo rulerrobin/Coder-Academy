@@ -58,7 +58,7 @@ def create_db():
     db.create_all() # creates the databases that are defined above (as intepreted language)
     print('Tables created successfull')
 
-@app.cli.command('seed') # creates instance of the Card model in memory
+@app.cli.command('seed') # creates new base data to tables
 def seed_db():
 
     users = [
@@ -117,7 +117,7 @@ def register():
         # Parse, sanitize and validate the incoming JSON data
         # via the schema. 
         user_info = UserSchema().load(request.json) 
-        # Create a new User model instance with the scheme data 
+        # Create a new User model instance with the scheme data from the incoming JSON request
         user = User(
             email = user_info['email'],
             password = bcrypt.generate_password_hash(user_info['password']).decode('utf-8'),
@@ -131,10 +131,24 @@ def register():
         # print(request.json) # request function prints information about incoming request # .json as incoming json object allows to see as python object
         # print (user.__dict__)
 
-        # return the new user
+        # return the new user excluding password
         return UserSchema(exclude=['password']).dump(user), 201
     except IntegrityError:
         return {'error': 'Email address already in use'}, 409
+
+@app.route('/login', methods=['POST'])
+def login():
+    try:
+        stmt = db.select(User).filter_by(email=request.json['email']) # filter by can do equality, less flexible than a .where(user.email==request)
+        user = db.session.scalar(stmt) 
+        
+        if user and bcrypt.check_password_hash(user.password, request.json['password']): # checks user is true otherwise skips
+            return UserSchema(exclude=['password']).dump(user)
+        else:
+            return {'error': 'Invalid email address or password'}, 401
+    except KeyError:
+        return {'error': 'Email and password are required'}, 400
+
 
 @app.route('/cards')
 def all_cards():
