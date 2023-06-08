@@ -30,7 +30,7 @@ def register():
 
         # return the new user excluding password
         return UserSchema(exclude=['password']).dump(user), 201
-    except IntegrityError:
+    except IntegrityError: 
         return {'error': 'Email address already in use'}, 409
 
 @auth_bp.route('/login', methods=['POST'])
