@@ -1,55 +1,52 @@
-from flask import Flask, request
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, abort
 from datetime import date
-from flask_marshmallow import Marshmallow
-from flask_bcrypt import Bcrypt
 from sqlalchemy.exc import IntegrityError
-from flask_jwt_extended import JWTManager, create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity 
 from datetime import timedelta
+from os import environ
+from dotenv import load_dotenv
+from models.user import User, UserSchema
+from models.card import Card, CardSchema
+from init import db, ma, bcrypt, jwt
+
+
+load_dotenv()
+
+print(environ)
 
 app = Flask(__name__)
 
 print(app.config)
 
-app.config['JWT_SECRET_KEY'] = 'Ministry of Silly Walks' # Can be anything as a secret key, used to sign, verify and create tokens
+
+
+
+db.init_app(app)
+ma.init_app(app)
+jwt.init_app(app)
+bcrypt.init_app(app)
 
 # protocol+data base adaptor://user:password@hostname:port/database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://trello_dev:spameggs123@localhost:5432/trello' 
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URI')
 # has to be exact for it to work  app.config('SQLALCHEMY_DATABASE_URI')
+app.config['JWT_SECRET_KEY'] = environ.get('JWT_KEY')  # Can be anything as a secret key, used to sign, verify and create tokens
 
-db = SQLAlchemy(app) # create new instance of SQLAlchemy with a connection to the app
-ma = Marshmallow(app)
-bcrypt = Bcrypt(app) 
-jwt = JWTManager(app)
 
-class User(db.Model):
-    __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    email = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String, nullable=False)
-    is_admin = db.Column(db.Boolean, default=False)
+def admin_required():
+    user_email = get_jwt_identity()
+    stmt = db.select(User).filter_by(email=user_email)
+    user = db.session.scalar(stmt)
+    if not (user and user.is_admin):
+        abort(401)
 
-class UserSchema(ma.Schema):
-    class Meta:
-        fields = ('name', 'email', 'password', 'is_admin') # Only these fields to show 
+@app.errorhandler(401)
+def unauthorized(err):
+    return {'error':'You must be an admin'}, 401
 
-# alchemy allows us to put a model on a database
-class Card(db.Model): # inheriting from database SQLalchemy structure
-    __tablename__ = 'cards' # declare name of table
 
-    id = db.Column(db.Integer, primary_key=True) # tells it is the primary key and it integer
-    title = db.Column(db.String(100))
-    description = db.Column(db.String())
-    status = db.Column(db.String(30))
-    date_created = db.Column(db.Date())
 
-class CardSchema(ma.Schema): # name convention = modelNameSchema
-    class Meta:
-        # list model fields wanting to be included
-        fields = ('id', 'title', 'description', 'status', 'date_created')
-        
+
 
 
 # just as per sql tables we dropped first we also need to drop the tables whenever created so it becomes a new slate
@@ -58,6 +55,7 @@ class CardSchema(ma.Schema): # name convention = modelNameSchema
 def create_db():
     db.drop_all() # drops tables for new slate
     db.create_all() # creates the databases that are defined above (as intepreted language)
+    db.session.commit() #
     print('Tables created successfull')
 
 @app.cli.command('seed') # creates new base data to tables
@@ -154,7 +152,10 @@ def login():
 
 
 @app.route('/cards')
+@jwt_required() # protects to say token is needed
 def all_cards():
+    admin_required()
+    
     # GOAL - select * from cards;
     stmt = db.select(Card).order_by(Card.status.desc())
     # .limit(2) # do a select query from cards limited to 2 # if only 1 its returned as an item/object
