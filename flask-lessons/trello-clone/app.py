@@ -8,26 +8,24 @@ from dotenv import load_dotenv
 from models.user import User, UserSchema
 from models.card import Card, CardSchema
 from init import db, ma, bcrypt, jwt
-from blueprints.cli_bp import db_commands
-
+from blueprints.cli_bp import cli_bp
+from blueprints.auth_bp import auth_bp
 
 load_dotenv()
 
-print(environ)
+print(environ.get('DB_URI'))
 
 app = Flask(__name__)
+
+app.config['JWT_SECRET_KEY'] = environ.get('JWT_KEY')   # Can be anything as a secret key, used to sign, verify and create tokens
+# protocol+data base adaptor://user:password@hostname:port/database
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URI')
+# has to be exact for it to work  app.config('SQLALCHEMY_DATABASE_URI')
 
 db.init_app(app)
 ma.init_app(app)
 jwt.init_app(app)
 bcrypt.init_app(app)
-
-# protocol+data base adaptor://user:password@hostname:port/database
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DB_URI')
-# has to be exact for it to work  app.config('SQLALCHEMY_DATABASE_URI')
-app.config['JWT_SECRET_KEY'] = environ.get('JWT_KEY')  # Can be anything as a secret key, used to sign, verify and create tokens
-
-
 
 def admin_required():
     user_email = get_jwt_identity()
@@ -40,46 +38,8 @@ def admin_required():
 def unauthorized(err):
     return {'error':'You must be an admin'}, 401
 
-app.register_blueprint(db_commands)
-
-@app.route('/register', methods=['POST']) # second parameter can put list of methods can use
-def register():
-    try:
-        # Parse, sanitize and validate the incoming JSON data
-        # via the schema. 
-        user_info = UserSchema().load(request.json) 
-        # Create a new User model instance with the scheme data from the incoming JSON request
-        user = User(
-            email = user_info['email'],
-            password = bcrypt.generate_password_hash(user_info['password']).decode('utf-8'),
-            name = user_info['name']
-        )
-
-        # add and commit the new user
-        db.session.add(user)
-        db.session.commit()
-
-        # print(request.json) # request function prints information about incoming request # .json as incoming json object allows to see as python object
-        # print (user.__dict__)
-
-        # return the new user excluding password
-        return UserSchema(exclude=['password']).dump(user), 201
-    except IntegrityError:
-        return {'error': 'Email address already in use'}, 409
-
-@app.route('/login', methods=['POST'])
-def login():
-    try:
-        stmt = db.select(User).filter_by(email=request.json['email']) # filter by can do equality, less flexible than a .where(user.email==request)
-        user = db.session.scalar(stmt) 
-        
-        if user and bcrypt.check_password_hash(user.password, request.json['password']): # checks user is true otherwise skips
-            token = create_access_token(identity=user.email, expires_delta=timedelta(days=1)) # expiry of token
-            return {'token': token, 'user': UserSchema(exclude=['password']).dump(user)}
-        else:
-            return {'error': 'Invalid email address or password'}, 401
-    except KeyError:
-        return {'error': 'Email and password are required'}, 400
+app.register_blueprint(cli_bp)
+app.register_blueprint(auth_bp)
 
 
 @app.route('/cards')

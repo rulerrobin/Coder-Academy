@@ -7,18 +7,18 @@ from init import db, bcrypt
 
 # because these were connected directly to app through @app need to create a type of container as it's separated
 
-db_commands = Blueprint('db', __name__) # unique name, typically __name__ dunder
+cli_bp = Blueprint('db', __name__) # unique name, typically __name__ dunder
 
-
+# to access commands instead of flask seed it needs to be # `flask db seed`` in reference to the group for blueprints
 # just as per sql tables we dropped first we also need to drop the tables whenever created so it becomes a new slate
-@db_commands.cli.command('create') # creates CLI customer commands, string can be anything
+@cli_bp.cli.command('create') # creates CLI customer commands, string can be anything
 def create_db():
     db.drop_all() # drops tables for new slate
     db.create_all() # creates the databases that are defined above (as intepreted language)
     db.session.commit() #
     print('Tables created successfull')
 
-@db_commands.cli.command('seed') # creates new base data to tables
+@cli_bp.cli.command('seed') # creates new base data to tables
 def seed_db():
 
     users = [
