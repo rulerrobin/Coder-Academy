@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from models.user import User, UserSchema
 from models.card import Card, CardSchema
 from init import db, ma, bcrypt, jwt
+from blueprints.cli_bp import db_commands
 
 
 load_dotenv()
@@ -15,11 +16,6 @@ load_dotenv()
 print(environ)
 
 app = Flask(__name__)
-
-print(app.config)
-
-
-
 
 db.init_app(app)
 ma.init_app(app)
@@ -44,72 +40,7 @@ def admin_required():
 def unauthorized(err):
     return {'error':'You must be an admin'}, 401
 
-
-
-
-
-
-# just as per sql tables we dropped first we also need to drop the tables whenever created so it becomes a new slate
-
-@app.cli.command('create') # creates CLI customer commands, string can be anything
-def create_db():
-    db.drop_all() # drops tables for new slate
-    db.create_all() # creates the databases that are defined above (as intepreted language)
-    db.session.commit() #
-    print('Tables created successfull')
-
-@app.cli.command('seed') # creates new base data to tables
-def seed_db():
-
-    users = [
-        User(
-            email = 'admin@spam.com',
-            password = bcrypt.generate_password_hash('spinynorman').decode('utf-8'),# decode utf converts to show as base 64
-            is_admin = True
-        ),
-        User(
-            name = 'John Cleese',
-            email = 'cleese@spam.com', 
-            password = bcrypt.generate_password_hash('tisbutascratch').decode('utf-8'),
-        )
-    ]
-
-    # created new instance of Card
-    cards = [
-        Card(
-            title = 'Start the project',
-            description = 'Stage 1 - Create an ERD',
-            status = "Done",
-            date_created = date.today()
-        ),
-
-        Card(
-            title = 'ORM Queries',
-            description = 'Stage 2 - Implement several queries',
-            status = "In Progress",
-            date_created = date.today()
-        ),
-
-        Card(
-            title = 'Marshmallow',
-            description = 'Stage 3 - Implement jsonify of models',
-            status = "In Progress",
-            date_created = date.today()
-        )
-    ]
-
-    # truncate the Card table same as drop table but only deletes records in table as reseeding
-    db.session.query(Card).delete()
-    db.session.query(User).delete()
-
-    # add card to session (transaction)
-    db.session.add_all(cards)
-    db.session.add_all(users)
-
-
-    # commit all transactions to database 
-    db.session.commit()
-    print('Models seeded')
+app.register_blueprint(db_commands)
 
 @app.route('/register', methods=['POST']) # second parameter can put list of methods can use
 def register():
