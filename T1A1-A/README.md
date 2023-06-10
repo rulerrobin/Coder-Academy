@@ -227,12 +227,56 @@ As a productivity application that is highly flexible, the database technology a
 
 ### **d. Describe the way data is structured within the app**
 
+Notion is structured using a block-based structure. The blocks in notion each have their own ID and each block has a type that determines how it is rendered within the interface, the type also defines how the properties are interpreted within it. In addition to the attributes that the block itself has they each have attributes that show how to interpret the relationship that they have with other blocks. 
 
+The data model behind Notion's flexibility https://www.notion.so/blog/data-model-behind-notion
 
 ### **e. Identify entities which must be tracked by the app**
 
+1. Pages
+2. Blocks
+3. Databases (User made)
+4. Views
+5. Tasks / To Do Lists
+6. Projects
+7. Notes / Documentation
+8. Users
+9. Files and Attachments
 
 ### **f. Identify the relationships and associations between the entities you have identified in part (e)**
 
+1. Pages
+   * Pages can have a one-to many relationship with blocks as a page can contain multiple blocks and blocks need a page
+   * Pages can have a one to many relationship with users as multiple uses can contribute to a page and they can also have multiple pages
+   * Can have zero to many with databases as multiple databases can connect with multiple pages and can exist without a database 
+2. Blocks
+   * Can have a many to one relationship with pages as many blocks can only be connected to one page and need a page to exist
+   * Can have a zero to many relationship with files and attachments as one block can have multiple attachments and can exist without a file
+   * Can have a many to zero relationship with projects as one block can have multiple projects referenced and can exist without one
+   * Can have a many to zero relationship with tasks as many blocks can reference a single task and can exist without one
+3. Databases  
+   * Can have a one to many relationship with views as a single database can have multiple views and cannot exist without one
+   * One to many relationship with users as multiple users can have multiple databases and cannot exist without one
+   * Can have one to many with pages as multiple databases can connect with multiple pages and cannot exist without one
+4. Views
+   * Many to one relationship with databases as multiple views can be used for a single database and cannot exist without one
+5. Tasks/to do list
+   * Zero to many relationship with users multiple users can be assigned to a single task and can exist without one
+   * Zero to many relationship with projects because a project can have multiple or none tasks assigned and can exist without one
+6. Projects
+   * One to many relationship with tasks because a project can have many to none tasks assigned and can exist without one
+   * Zero to many relationship with page because a project can exist on multiple pages but a page does not need a project
+7. Notes / Documentation
+   * One to Many relationship with users as multiple or one users can be assigned access
+8. Users
+   * Zero to many relationship with pages as a user can have no pages (empty account)
+   * Zero to many relationship with tasks as users can be assigned none or many tasks
+   * Zero to many relationship with notes or documentation as a user can have no notes or documentation or more assigned
+   * One to many relationship with db
+9. Files and Attachments
+   * one to many relationship with blocks as multiple blocks can be assigned access to files
 
-**g. Design a schema using an Entity Relationship Diagram (ERD) appropriate for the database of this website (assuming a relational database model) 	50-100 per part**
+
+### **g. Design a schema using an Entity Relationship Diagram (ERD) appropriate for the database of this website (assuming a relational database model)**
+
+![Alt text](docs/ERD_Q12F.jpg)
