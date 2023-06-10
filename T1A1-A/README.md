@@ -117,25 +117,106 @@ Following from the above mentioned information some common methods of protecting
 
 6 Essential Data Protection Methods https://gdprinformer.com/gdpr-articles/6-essential-data-protection-methods
 
-## Q8   Research what your legal obligations are in relation to handling user data and how they can be met for the project
+## Q8   Research what your legal obligations are in relation to handling user data and how they can be met for the project 100-200
+
+Two major legal obligations in relation to handling user data and information in Australia are the Privacy Act 1988 and the Notifiable Data Breaches Scheme (Under the Privacy Act). These policies stipulate that in the first place within the private sector with orgnisations who make a certain threshold must comply to having:
+1. A privacy policy
+2. Obtain consent for dat collections
+3. Take reasonable measures to protect information
+4. The information collected can only be retrieved if it is necessary for their work and eventually remove it if no longer needed
+5. Must notify customers as well as the Office of the Australian Commissioner in the event of a data breach and react promptly to the breach
+
+In regards to the project these needs can be met by following the steps that were mentioned above in the previous questions where things such as encryption, mutli factor authentication, access controls, and protocols can all be used and implemented to meet reasonable measures to protect information. However there must also be constant checks to know if data is needed or not for retreival or deletion. 
+
+Retention and deletion of personal information collected during COVID-19 https://www.oaic.gov.au/privacy/privacy-guidance-for-organisations-and-government-agencies/covid-19/retention-and-deletion-of-personal-information-collected-during-covid-19
+
+Use and disclosure of personal information https://www.oaic.gov.au/privacy/your-privacy-rights/your-personal-information/use-and-disclosure-of-personal-information
+
+Collection of personal information https://www.oaic.gov.au/privacy/your-privacy-rights/your-personal-information/collection-of-personal-information
+
+Privacy https://www.ag.gov.au/rights-and-protections/privacy
+
+Data Protection Laws and Regulations Australia https://iclg.com/practice-areas/data-protection-laws-and-regulations/australia
 
 ***
 ACME Corporation has specifically requested the app to be based on a relational database. The next set of questions relate to this RfQ-requirement.
 
 ## Q9 	Describe the structural aspects of the relational database model. Your description should include information about the structure in which data is stored and how relations are represented in that structure. 	100-200
 
+The relational database model organises data into either tables or relations which consists of the elements of rows and columns. Aspects of the structure include the strcutrue in which data is stored and how relations appear.
+
+In a relational database model data is stored in tables which typically represent an entity such as people, organisations or customers. Each row of the table typically represents a single record of that entity and each column tends to represent a specific attribute of that entity that is categorised.
+
+Each row also known as Tuples contains a unique identifier for each row called the primary key which uniquely identifies it from other rows and ensures the integrity of the data. The columns also known as attributes have names and a data type that is stored within the column, this type can be anything such as text, booleans or numbers and can also define constraints onto the data stored within them such as (null=False, unique=True or validations)
+
+The relationship part of the database model allows for tables to link to one another. The common types of these are for example one-to-one, many-to-one or one-to-many. These relationships are defined using `foreign keys` which are attributes within one table that relate to a primary key in the other. This relationship through keys are able to keep data integrity across multiple tables.
+
+Coder-Academy Slides and Notes
+
+Relational Data Model in DBMS | Database Concepts & Example https://www.guru99.com/relational-data-model-dbms.html
+
 ## Q10 	Describe the integrity aspects of the relational database model. Your description should include information about the types of data integrity and how they can be enforced in a relational database. 	100-200
+
+In a relation database integrity aspects are used to ensure consistency and reliability of the data within it. This model type provides several ways to consistently implement the integrity within the model.
+
+Key contraints or entity integrity is used as the main attribute that is unique per row. This is known as the primary key and are never null. This is very important for integrity for relational databases as it is used to differentiate between different the rows and ensures that the data is uniquely attached to a different ID protecting the integrity of each row. 
+
+Following from this are the use of foreign keys in a relation database, and this is also known as referential integrity constraints. For a relation database a foreign key is used to reference between different tables. The foreign key must exist in the database as a primary key in a different table and that is how they relate to one another. This foreign key usage prevents references from being orphaned or becoming invalid.
+
+Domain integrity relates to the columns of the table within the database, what this does is that it keeps the integrity of the value within the column within the contraints defined. 
+
+Coder-Academy Slides and Notes
+
+Relational Data Model in DBMS | Database Concepts & Example https://www.guru99.com/relational-data-model-dbms.html
 
 ## Q11 	Describe the manipulative aspects of the relational database model. Your description should include information about the ways in which data is manipulated (added, removed, changed, and retrieved) in a relational database. 	100-200
 
+As an example to be more specific the Structured Query Language (SQL) is widely used language when it comes to using a relational database. SQL provides commands that are able to execute operations on tables and retreiving data from a relational database. The data manipulation however is always controlled by sticking to the rules of the data, constrains and rules of the database.
+
+SQL is able to provide a few examples of how to manipulate data:
+
+1. INSERT: By using the INSERT operator data can be inserted into an existing table using the table name and values for columns in the row that will be made. 
+   
+   `INSERT INTO players (id, rank, elo, kda) VALUES (201, Radiant, 3011, 1.3)`
+
+2. UPDATE: Through the use of UPDATE, existing data within the table can be updated and changed when needed, it tends to have conditions that allow a choice to be made on which rows are to be changed as well.
+
+    `UPDATE players SET elo = 2900 WHERE id = 201`
+
+3. DELETE: The delete operation as the name suggests is used to remove data from the table by specifying the table name and delete based on condtions.
+
+    `DELETE player WHERE id = 201`
+
+4. SELECT: This operator is used to retrieve data from the database, it is not limited to a single table and involves specifying columns that are wanted and applying conditions for the rows if needed. 
+
+    `SELECT kda FROM players WHERE rank = radiant`
 
 ***
 Companies (including ACME Corporation) value previous project experience and case studies. The following set of questions relate to this RfQ-requirement. 
 
-## Q12 	Conduct research into a web application (app) and answer the following parts:  a. List and describe the software used by the app.
-  b. Describe the hardware used to host the app.
-  c. Describe the interaction of technologies within the app
-  d. Describe the way data is structured within the app
-  e. Identify entities which must be tracked by the app
-  f. Identify the relationships and associations between the entities you have identified in part (e)
-  g. Design a schema using an Entity Relationship Diagram (ERD) appropriate for the database of this website (assuming a relational database model) 	50-100 per part
+## Q12 	Conduct research into a web application (app) and answer the following parts: 50-100 per part
+
+The app I have chosen is the productivity app called Notion which can be used on the Web as well as an application on windows and apple platforms.
+
+### **a. List and describe the software used by the app.**
+
+Backend Infrastructure: Notion defifnitely uses a robust backend because it stores a large amount of data and synchronises this between all user devices that they log into. This infrastructure would include things such as servers, databases and cloud storage.
+
+
+
+### **b. Describe the hardware used to host the app.**
+
+
+### **c. Describe the interaction of technologies within the app**
+
+
+### **d. Describe the way data is structured within the app**
+
+
+### **e. Identify entities which must be tracked by the app**
+
+
+### **f. Identify the relationships and associations between the entities you have identified in part (e)**
+
+
+**g. Design a schema using an Entity Relationship Diagram (ERD) appropriate for the database of this website (assuming a relational database model) 	50-100 per part**
