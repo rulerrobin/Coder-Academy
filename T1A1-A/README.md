@@ -202,9 +202,16 @@ The app I have chosen is the productivity app called Notion which can be used on
 
 Backend Infrastructure: Notion defifnitely uses a robust backend because it stores a large amount of data and synchronises this between all user devices that they log into. This infrastructure would include things such as servers, databases and cloud storage.
 
+Frontend: The frontend of Noton is likely built using technologies such as HTML, CSS and Javascript as it allows for the user interface to be responsive and interactive.
 
+DBMS: A database management system is definitely used and a sophisticated is definitely used for a productivity system such as notion. The DBMS is one that allows for schemas to be changed on the go and definitely is a relational type considering how the different tables and pages can all connec with each other.
+
+Text Editor(Rich): Notion being a productivity app that allows users to manipulate the text that they create with styling options must also use a rich text editor whether it be one that is built by Notion for an inhouse solution or something with similar functionality such as editorjs or slate.
+
+Data encryption and Security: Considering user data is quite private and is a sensitive topic, Notion being a software that is all about user personal information must use encryption and security techniques that protect data while in the app as well as during the protocols.
 
 ### **b. Describe the hardware used to host the app.**
+
 
 
 ### **c. Describe the interaction of technologies within the app**
