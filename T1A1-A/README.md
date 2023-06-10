@@ -212,12 +212,21 @@ Data encryption and Security: Considering user data is quite private and is a se
 
 ### **b. Describe the hardware used to host the app.**
 
+Servers: Notion as a online web application that stores and uses large amounts of data must use servers to store and handle this information. This can be either a data center or a cloud system.
 
+Network Equipment: As an online web application Notion requires reliable and speedy hardware so that users and the servers are able to communicate with each other. Equipment such as routers, switches and load balancers are used to facilitate data requests and manage network traffic.
+
+Data Storage: Related to servers data storage devices must be used to store user data which can vary from notes, documents, images and other types of information. This storage can be done through drives such as HDDs, SSDs and typically it's a mix of both. There may also be a backup type of devices especially with a web app with so much data hardware components may include things such as backup servers or storage that regularly back up data as well as keep servicability up if there are system failures or crashes.
 
 ### **c. Describe the interaction of technologies within the app**
 
+There are several key interactions of technology within Notion.
+
+As a productivity application that is highly flexible, the database technology allows users to manage storage, retrieval and manipulation of data making it easy to create and manage content within Notion. This is all possible through a MVC which is pertaining to the Web Technologies that allow a user to interact with Notion and the database. The Web technologies give users a GUI to make these changes and the MVC handles the processing of the requests from client to server and updates accordingly. 
+
 
 ### **d. Describe the way data is structured within the app**
+
 
 
 ### **e. Identify entities which must be tracked by the app**
