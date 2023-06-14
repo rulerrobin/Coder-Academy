@@ -8,6 +8,12 @@ from flask_jwt_extended import create_access_token, get_jwt_identity
 
 auth_bp = Blueprint('auth', __name__)
 
+@auth_bp.route('/users')
+def all_users():
+    stmt = db.select(User)
+    users = db.session.scalars(stmt)
+    return UserSchema(many=True, exclude=['password']).dump(users)
+
 @auth_bp.route('/register', methods=['POST']) # second parameter can put list of methods can use
 def register():
     try:
@@ -32,7 +38,7 @@ def register():
         return UserSchema(exclude=['password']).dump(user), 201
     except IntegrityError: 
         return {'error': 'Email address already in use'}, 409
-
+ 
 @auth_bp.route('/login', methods=['POST'])
 def login():
     try:
@@ -40,16 +46,16 @@ def login():
         user = db.session.scalar(stmt) 
         
         if user and bcrypt.check_password_hash(user.password, request.json['password']): # checks user is true otherwise skips
-            token = create_access_token(identity=user.email, expires_delta=timedelta(days=1)) # expiry of token
-            return {'token': token, 'user': UserSchema(exclude=['password']).dump(user)}
+            token = create_access_token(identity=user.id, expires_delta=timedelta(days=1)) # expiry of token
+            return {'token': token, 'user': UserSchema(exclude=['password', 'cards']).dump(user)}
         else:
             return {'error': 'Invalid email address or password'}, 401
     except KeyError:
         return {'error': 'Email and password are required'}, 400
 
 def admin_required():
-    user_email = get_jwt_identity()
-    stmt = db.select(User).filter_by(email=user_email)
+    user_id = get_jwt_identity()
+    stmt = db.select(User).filter_by(id=user_id)
     user = db.session.scalar(stmt)
     if not (user and user.is_admin):
         abort(401)
