@@ -27,7 +27,7 @@ def setup(): # factory function creates and configures object and returns object
 
     @app.errorhandler(ValidationError)
     def validation_error(err):
-        return {'error':err.__dict__}, 400
+        return {'error':err.__dict__['messages']}, 400
 
     app.register_blueprint(cli_bp)
     app.register_blueprint(auth_bp)
