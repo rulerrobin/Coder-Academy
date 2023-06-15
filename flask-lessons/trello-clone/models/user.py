@@ -10,13 +10,15 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
-    cards = db.relationship('Card', back_populates='user') # relate to Card model in database
+    # TIP plurals usually need cascade deletion
+    cards = db.relationship('Card', back_populates='user', cascade='all, delete') # relate to Card model in database
+    comments = db.relationship('Comment', back_populates='user', cascade='all, delete') # relate to Comment model in database
 
 class UserSchema(ma.Schema):
     #
     cards = fields.List(fields.Nested('CardSchema', exclude=['user', 'id'])) # nested list of schemas because its many cards to one user (cards = plural)
     # exclude user as it's nested looped creating an infinite loop
-    comments = fields.Nested('CommentSchema', exclude=['user', 'id'])
+    comments = fields.List(fields.Nested('CommentSchema', exclude=['user', 'id']))
 
     class Meta:
-        fields = ('name', 'email', 'password', 'is_admin','cards') # Only these fields to show 
+        fields = ('name', 'email', 'password', 'is_admin','cards', 'comments') # Only these fields to show 

@@ -35,36 +35,34 @@ def seed_db():
         )
     ]
 
-    db.session.query(User).delete()
+    db.session.query(User).delete() # cascade delete as cards are connected to users and comments to cards and users
     db.session.add_all(users)
     db.session.commit()
 
-    print(users[0].id)
+    # print(users[0].id)
 
     # created new instance of Card
     cards = [
         Card(
-            title = 'Start the project',
-            description = 'Stage 1 - Create an ERD',
-            status = "Done",
-            date_created = date.today(),
-            user_id=users[0].id
+            title="Start the project",
+            description="Stage 1 - Create an ERD",
+            status="Done",
+            date_created=date.today(),
+            user=users[0]
         ),
-
         Card(
-            title = 'ORM Queries',
-            description = 'Stage 2 - Implement several queries',
-            status = "In Progress",
-            date_created = date.today(),
-            user_id=users[0].id
+            title="ORM Queries",
+            description="Stage 2 - Implement several queries",
+            status="In Progress",
+            date_created=date.today(),
+            user=users[0]
         ),
-
         Card(
-            title = 'Marshmallow',
-            description = 'Stage 3 - Implement jsonify of models',
-            status = "In Progress",
-            date_created = date.today(),
-            user_id=users[1].id
+            title="Marshmallow",
+            description="Stage 3 - Implement jsonify of models",
+            status="In Progress",
+            date_created=date.today(),
+            user=users[1]
         )
     ]
 
@@ -77,22 +75,21 @@ def seed_db():
         Comment(
             message='Comment 1',
             date_created=date.today(),
-            user_id=users[0].id,
-            card_id=cards[1].id
+            user=users[0],
+            card=cards[1]
         ),
-                Comment(
+        Comment(
             message='Comment 2',
             date_created=date.today(),
-            user_id=users[1].id,
-            card_id=cards[1].id
+            user=users[1],
+            card=cards[1]
         ),
-                Comment(
+        Comment(
             message='Comment 3',
             date_created=date.today(),
-            user_id=users[1].id,
-            card_id=cards[0].id
+            user=users[1],
+            card=cards[0]
         )
-
     ]
 
         # truncate the Card table same as drop table but only deletes records in table as reseeding

@@ -10,12 +10,12 @@ class Comment(db.Model): # inheriting from database SQLalchemy structure
     message = db.Column(db.String())
     date_created = db.Column(db.Date())
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     # db.ForeignKey refers to table.column and it already knows cause it exists in the SQLac database 
     user = db.relationship('User', back_populates='comments')  # back_populates = what is the mirror object (connecting point)
     # in both models ONLY if we want it to go both ways
 
-    card_id = db.Column(db.Integer, db.ForeignKey('cards.id'), nullable=False)
+    card_id = db.Column(db.Integer, db.ForeignKey('cards.id', ondelete='CASCADE'), nullable=False)
     card = db.relationship('Card', back_populates='comments')
 
 class CommentSchema(ma.Schema): # name convention = modelNameSchema

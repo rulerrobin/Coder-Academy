@@ -4,6 +4,7 @@ from init import db, ma, bcrypt, jwt
 from blueprints.cli_bp import cli_bp
 from blueprints.auth_bp import auth_bp
 from blueprints.cards_bp import cards_bp
+from marshmallow.exceptions import ValidationError
 
 # instead of load dot env wrap in a function
 def setup(): # factory function creates and configures object and returns object
@@ -22,7 +23,11 @@ def setup(): # factory function creates and configures object and returns object
 
     @app.errorhandler(401)
     def unauthorized(err):
-        return {'error':'You must be an admin'}, 401
+        return {'error':f'str{err}'}, 401
+
+    @app.errorhandler(ValidationError)
+    def validation_error(err):
+        return {'error':err.__dict__}, 400
 
     app.register_blueprint(cli_bp)
     app.register_blueprint(auth_bp)
