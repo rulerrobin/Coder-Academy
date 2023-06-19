@@ -1,5 +1,9 @@
 from init import db, ma
-from marshmallow import fields
+from marshmallow import fields, validates, validates_schema
+from marshmallow.validate import Length, OneOf, And, Regexp
+from marshmallow.exceptions import ValidationError
+
+VALID_STATUSES = ['To Do', 'Done', 'In Progress', 'Testing', 'Deployed'] # constant = variable to not be changed is CAPS
 
 # alchemy allows us to put a model on a database
 class Card(db.Model): # inheriting from database SQLalchemy structure
@@ -23,7 +27,23 @@ class CardSchema(ma.Schema): # name convention = modelNameSchema
     user = fields.Nested('UserSchema', exclude=['password', 'cards', 'comments']) # Tells code user = nested version of UserSchema
     # does not need to list fields list as only one in the link
     comments = fields.List(fields.Nested('CommentSchema', exclude=['user', 'id']))
-    title = fields.String(required=True) # title must be a string and required
+    title = fields.String(required=True, validate=And(
+        Length(min=3, error='Title must be at least 3 characters long'),
+        Regexp('^[a-zA-Z0-9 ]+$', error='Only letters, numbers, and spaces are allowed') 
+        # [] allowable characters + means any number of chars ^$ shows string end and start
+        )) # title must be a string and required
+    description = fields.String(load_default='') # default if nothing is there as schema is looking for keys when creating cards even if null is not forced
+    status = fields.String(load_default=VALID_STATUSES[0]) 
+    # status = fields.String(load_default=VALID_STATUSES[0], validate=OneOf(VALID_STATUSES)) # if in the list it is valid
+
+    @validates_schema()
+    def validate_status(self, data, **kwargs):
+        status = [x for x in VALID_STATUSES if x.upper() == data['status'].upper()]
+        if len(status) == 0:
+            raise ValidationError(f'Status must be one of: {VALID_STATUSES}')
+
+        data['status'] = status[0]
+
 
     class Meta:
         # list model fields wanting to be included
