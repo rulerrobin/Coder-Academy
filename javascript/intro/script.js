@@ -24,8 +24,29 @@ console.log(x.includes('fdadfad'))
 // def add(x, y): 
 //   return x + y
 
-function add(x, y) {
-    return x + y
-}
+// function add(x, y) {
+//     return x + y
+// }
 
-console.log(add(5,10))
+// const numbers = [12, 50, 44, 32, 2]
+
+// const Utils = {
+//     add: (x, y) => x + y,
+//     doubler: arr => arr.map(x => x * 2)
+// }
+
+// console.log (Utils.add(5, 10))
+// console.log(Utils.doubler(numbers))
+
+// const people = ['Matt', 'Glen', 'Mary', 'Kate']
+
+// const [,second, third, ...others] = people
+
+// console.log(second, third, others)
+
+const bobBirds = ['Robin', 'Crew']
+const sallyBirds = ['Bluejay', 'Cardinal']
+
+const allBirds = [...bobBirds, ... sallyBirds, 'Magpie']
+
+console.log(allBirds)
