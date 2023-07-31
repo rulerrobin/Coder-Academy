@@ -1,18 +1,35 @@
-import Greeting from "./Greeting"
-import "./App.css"
+import React from 'react'
+import Comment from './Comment'
+import Card from './Card'
 
-const age = 10 * 5 
-
-function App() {
+const App = () => {
   return (
-    <>
-      <h1>Hello</h1>
-      <Greeting foo ="bar" name="Matt" age={age}/>
-      <Greeting />
-      <p>Lorem ipsum dolor</p>
-      <Greeting />
-    </>
-    )
-  }
+    <section>
+        <Comment 
+        avatar = "https://i.pravatar.cc/60?1"
+        name="Mary Smith" 
+        date="11/10/22" 
+        comment="This is a comment" 
+        >
+            <h3>Hello</h3>
+            <p>A better comment</p>
+        </Comment>
+        <Card>
+            <Comment 
+            avatar = "https://i.pravatar.cc/60?4"
+            name="Joe Bloggs" 
+            date="1/6/22" 
+            comment="React is awesome!" 
+            />
+        </Card>
+        <Comment 
+        avatar = "https://i.pravatar.cc/60/?90"
+        name="Jane Doe" 
+        date="22/10/22" 
+        comment="Couldn't agree more!" 
+        />
+    </section>
+  )
+}
 
 export default App
