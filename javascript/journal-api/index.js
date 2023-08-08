@@ -1,12 +1,16 @@
 import express from 'express'
-
-const categories = ['Food', 'Gaming', 'Coding', 'Other']
+import { EntryModel, CategoryModel } from './db.js'
+import entryRoutes from './routes/entry_routes.js'
 
 const app = express()
 const port = 4001
 
-app.get('/', (request, response) => response.send({info: 'Journal API'}))
+app.use(express.json())
 
-app.get('/categories', (req, res) => res.status(204).send(categories))
+app.get('/', (request, response) => response.send({ info: 'Journal API!' }))
+
+app.get('/categories', async (req, res) => res.send(await CategoryModel.find()))
+
+app.use('/entries', entryRoutes)
 
 app.listen(port)
