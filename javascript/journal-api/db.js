@@ -9,8 +9,8 @@ async function dbClose() {
 }
 
 mongoose.connect(process.env.ATLAS_DB_URL)
-   .then( m => console.log(m.connection.readyState === 1 ? 'Mongoose Connected!' : 'Mongoose failed to connect'))
-   .catch(err => console.error(err))
+  // .then(m => console.log(m.connection.readyState === 1 ? 'Mongoose connected!' : 'Mongoose failed to connect'))
+  .catch(err => console.error(err))
 
 const entrySchema = new mongoose.Schema({
   category: { type: mongoose.ObjectId, ref: 'Category' },
@@ -26,4 +26,3 @@ const categorySchema = new mongoose.Schema({
 const CategoryModel = mongoose.model('Category', categorySchema)
 
 export { EntryModel, CategoryModel, dbClose }
-
